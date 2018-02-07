@@ -1,2 +1,34 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<h1>MyTasks!</h1>
+
+<% unless notice.nil? %>
+	<%= notice %>
+<% end %>
+
+<p>
+	<%= link_to 'Nova lista'.html_safe,
+						  new_list_path %>
+	<%= link_to 'Nova tarefa'.html_safe,
+							new_task_path %>
+</p>
+
+<% @lists.each do |list| %>
+	<h4><%= list.name %></h4>
+	<% if list.tasks.empty? %>
+		<p><strong>Nenhuma tarefa nessa lista! :)</strong></p>
+	<% else %>
+		<table>
+			<% list.tasks.each do |task| %>
+				<tr>
+					<td width="*">
+						<%= task.done? ? "[X]" : "[ ]" %>
+						<%= task.name %>
+					</td>
+					<td>
+						<%= link_to "Editar", edit_task_path(task) %>
+						<%= link_to "Apagar", task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-small" %>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+	<% end %>
+<% end %>

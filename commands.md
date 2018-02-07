@@ -140,3 +140,61 @@ end
 git add .
 git commit -am "Adiciona seeds e controller root"
 ```
+
+### app/controllers/welcome_controller.rb
+```ruby
+class WelcomeController < ApplicationController
+  def index
+		@lists = List.all
+  end
+end
+```
+
+### app/views/welcome/index.html.erb
+```erb
+<h1>MyTasks!</h1>
+
+<% unless notice.nil? %>
+	<%= notice %>
+<% end %>
+
+<p>
+	<%= link_to 'Nova lista'.html_safe,
+						  new_list_path %>
+	<%= link_to 'Nova tarefa'.html_safe,
+							new_task_path %>
+</p>
+
+<% @lists.each do |list| %>
+	<h4><%= list.name %></h4>
+	<% if list.tasks.empty? %>
+		<p><strong>Nenhuma tarefa nessa lista! :)</strong></p>
+	<% else %>
+		<table>
+			<% list.tasks.each do |task| %>
+				<tr>
+					<td width="*">
+						<%= task.done? ? "[X]" : "[ ]" %>
+						<%= task.name %>
+					</td>
+					<td>
+						<%= link_to "Editar", edit_task_path(task) %>
+						<%= link_to "Apagar", task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-small" %>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+	<% end %>
+<% end %>
+```
+
+Problemas com links e redirecionamentos. Como resolver?
+
+## Seleção da lista na criação de tarefas
+
+### app/views/tasks/_form.html.erb
+```ruby
+# Altere a linha 26 para
+<%= form.collection_select :list_id, List.all, :id, :name,{}, {class: "form-control"} %>
+```
+
