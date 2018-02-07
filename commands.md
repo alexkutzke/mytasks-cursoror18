@@ -5,7 +5,7 @@ vagrant ssh
 
 cd /vagrant
 
-rails new mytasks --skip-coffee
+rails new mytasks
 cd mytasks
 
 # Configura o git com suas credenciais
@@ -13,7 +13,7 @@ git config --global user.name  "SEU NOME"
 git config --global user.email "SEU EMAIL"
 
 #### Criar repositório no seu github ####
-git remote add origin git@github.com:USUARIO_GITHUB/REPOSITORIO.git
+git remote add origin https://github.com/USUARIO_GITHUB/REPOSITORIO.git
 git push -u origin master
 
 #### Descomentar linha 20 no arquivo Gemfile
@@ -32,4 +32,31 @@ vagrant ssh
 
 cd /vagrant/mytasks
 
+# Adiciona os arquivos os repositorio git
+git add .
+git commit -am "Adiciona arquivos iniciais"
+
+rails g scaffold list name:string
+rails db:migrate
+
+rails g scaffold task name:string done:boolean list:references
 ```
+
+Aqui, vamos definir que o campo `done` tem um valor default. Para isso, edite o arquivo da migração criado pelo generate (db/migrate/20180000000000_create_tasks.rb):
+
+```ruby
+# db/migrate/20180000000000_create_tasks.rb
+class CreateTasks < ActiveRecord::Migration[5.1]
+  def change
+    create_table :tasks do |t|
+      t.string :name
+      t.boolean :done, default: false ########                   
+      t.references :list, foreign_key: true
+
+      t.timestamps
+    end
+  end
+end
+```
+
+
