@@ -59,4 +59,84 @@ class CreateTasks < ActiveRecord::Migration[5.1]
 end
 ```
 
+```bash
+git add .
+git commit -am "Adiciona modelos"
+```
 
+### app/models/task.rb
+```ruby
+# linha 2
+belongs_to :list
+```
+
+### app/models/list.rb
+```ruby
+# linha 2
+has_many :tasks
+```
+
+### db/seeds.rb
+```ruby
+List.delete_all
+Task.delete_all
+
+lista_mercado = List.create({name: "Mercado"})
+lista_trabalho = List.create({name: "Trabalho"})
+lista_casa = List.create({name: "Casa"})
+
+lista_mercado.tasks.create([
+  {
+    name: "Melão"
+  },
+  {
+    name: "Ovos"
+  },
+  {
+    name: "Carne"
+  },
+  {
+    name: "Queijo",
+    done: true
+  }
+  ])
+
+lista_casa.tasks.create([
+    {
+      name: "Arrumar armário"
+    },
+    {
+      name: "Limpar horta"
+    },
+    {
+      name: "Pagar luz",
+      done: true
+    }
+    ])
+```
+
+```bash
+rails db:seed
+```
+
+```bash
+rails g controller welcome index
+```
+
+### config/routes.rb
+```ruby
+Rails.application.routes.draw do
+  get 'welcome/index'
+
+  resources :tasks
+  resources :lists
+
+	root "welcome#index"
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+end
+```
+
+```bash
+git add .
+git commit -am "Adiciona seeds e controller root"
+```
