@@ -1,34 +1,44 @@
-<h1>MyTasks!</h1>
+<div class="col-xs-offset-3 col-xs-6">
+  <h1 class="page-header">MyTasks!</h1>
 
-<% unless notice.nil? %>
-	<%= notice %>
-<% end %>
+  <% unless notice.nil? %>
+    <div class="alert alert-info">
+      <%= notice %>
+    </div>
+  <% end %>
 
-<p>
-	<%= link_to 'Nova lista'.html_safe,
-						  new_list_path %>
-	<%= link_to 'Nova tarefa'.html_safe,
-							new_task_path %>
-</p>
+  <p>
+    <%= link_to '<i class="glyphicon glyphicon-plus"></i> Nova lista'.html_safe,
+                  new_list_path, class: "btn btn-default" %>
+    <%= link_to '<i class="glyphicon glyphicon-plus"></i> Nova tarefa'.html_safe,
+                  new_task_path, class: "btn btn-default" %>
+  </p>
 
-<% @lists.each do |list| %>
-	<h4><%= list.name %></h4>
-	<% if list.tasks.empty? %>
-		<p><strong>Nenhuma tarefa nessa lista! :)</strong></p>
-	<% else %>
-		<table>
-			<% list.tasks.each do |task| %>
-				<tr>
-					<td width="*">
-						<%= task.done? ? "[X]" : "[ ]" %>
-						<%= task.name %>
-					</td>
-					<td>
-						<%= link_to "Editar", edit_task_path(task) %>
-						<%= link_to "Apagar", task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-small" %>
-					</td>
-				</tr>
-			<% end %>
-		</table>
-	<% end %>
-<% end %>
+  <% @lists.each do |list| %>
+    <h4><%= list.name %></h4>
+		<% if list.tasks.empty? %>
+			<p><strong>Nenhuma tarefa nessa lista! :)</strong></p>
+		<% else %>
+			<table class="table table-small table-hover">
+        <% list.tasks.each do |task| %>
+          <tr class="<%= "success".html_safe if task.done? %>">
+            <td width="*">
+              <%= task.done? ? '<i class="glyphicon glyphicon-ok"></i>'.html_safe :
+                             '<i class="glyphicon glyphicon-remove"></i>'.html_safe %>
+              <%= task.name %>
+            </td>
+            <td class="text-right">
+              <%= link_to edit_task_path(task), class: "btn btn-primary btn-small" do %>
+                <i class="glyphicon glyphicon-pencil"></i>
+              <% end %>
+
+              <%= link_to task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-small" do %>
+                <i class="glyphicon glyphicon-trash"></i>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+			</table>
+		<% end %>
+  <% end %>
+</div>
