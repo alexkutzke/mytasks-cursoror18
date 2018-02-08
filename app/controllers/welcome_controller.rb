@@ -1,5 +1,7 @@
 class WelcomeController < ApplicationController
-  def index
-		@lists = List.all
+	before_action :authenticate_user!
+  
+	def index
+		@lists = List.where(user_id: current_user.id)
   end
 end

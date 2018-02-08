@@ -23,7 +23,7 @@
 
   <div class="field">
     <%= form.label :list_id %>
-		<%= form.collection_select :list_id, List.all, :id, :name,{}, {class: "form-control"} %>
+		<%= form.collection_select :list_id, List.where(user_id: current_user.id), :id, :name,{}, {class: "form-control"} %>
   </div>
 
   <div class="actions">

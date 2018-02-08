@@ -229,3 +229,9 @@ echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/source
 
 sudo apt-get update && sudo apt-get install yarn
 ```
+
+### Devise
+```bash
+rails g migration addUserToLists user:references
+rails g migration addUserToTasks user:references
+```
