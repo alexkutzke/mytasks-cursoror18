@@ -198,3 +198,19 @@ Problemas com links e redirecionamentos. Como resolver?
 <%= form.collection_select :list_id, List.all, :id, :name,{}, {class: "form-control"} %>
 ```
 
+
+### Task toogle
+`app/controllers/tasks_controller.rb`
+`config/routes.rb`
+
+### Task partial
+`app/views/welcome/index.html.erb`
+`app/views/tasks/_task.html.erb`
+
+### Links e routes sobrando
+`config/routes.rb` "only"
+
+3 redirects em cada controller:
+`app/controllers/tasks_controller.rb`
+`app/controllers/lists_controller.rb`
+

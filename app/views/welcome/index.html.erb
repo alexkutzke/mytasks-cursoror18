@@ -11,13 +11,4 @@
 							new_task_path %>
 </p>
 
-<% @lists.each do |list| %>
-	<h4><%= list.name %></h4>
-	<% if list.tasks.empty? %>
-		<p><strong>Nenhuma tarefa nessa lista! :)</strong></p>
-	<% else %>
-		<table>
-			<%= render list.tasks %>
-		</table>
-	<% end %>
-<% end %>
+<%= render @lists %>
