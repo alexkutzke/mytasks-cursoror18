@@ -65,8 +65,6 @@ class TasksController < ApplicationController
 		@task = Task.find(params[:id])
 		@task.done = !@task.done
 		@task.save
-
-		redirect_to root_url
 	end
 
   private

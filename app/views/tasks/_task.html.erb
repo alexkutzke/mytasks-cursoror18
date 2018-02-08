@@ -1,6 +1,6 @@
-<tr>
+<tr id="task_<%= task.id %>">
 	<td width="*">
-		<%= link_to task.done? ? "[X]" : "[ ]", toggle_task_path(task) %>
+		<%= link_to task.done? ? "[X]" : "[ ]", toggle_task_path(task), remote: true %>
 		<%= task.name %>
 	</td>
 	<td>
