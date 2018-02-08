@@ -17,18 +17,7 @@
 		<p><strong>Nenhuma tarefa nessa lista! :)</strong></p>
 	<% else %>
 		<table>
-			<% list.tasks.each do |task| %>
-				<tr>
-					<td width="*">
-						<%= task.done? ? "[X]" : "[ ]" %>
-						<%= task.name %>
-					</td>
-					<td>
-						<%= link_to "Editar", edit_task_path(task) %>
-						<%= link_to "Apagar", task, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-small" %>
-					</td>
-				</tr>
-			<% end %>
+			<%= render list.tasks %>
 		</table>
 	<% end %>
 <% end %>
