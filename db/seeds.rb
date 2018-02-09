@@ -7,36 +7,42 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 List.delete_all
 Task.delete_all
+User.delete_all
 
-lista_mercado = List.create({name: "Mercado"})
-lista_trabalho = List.create({name: "Trabalho"})
-lista_casa = List.create({name: "Casa"})
+user1 = User.create(name: "User1", email: "a@a.com", password: "123123")
+user2 = User.create(name: "User2", email: "b@b.com", password: "123123")
 
-lista_mercado.tasks.create([
+lista_mercado = List.create({name: "Mercado", user_id: user1.id})
+lista_trabalho = List.create({name: "Trabalho", user_id: user1.id})
+lista_casa = List.create({name: "Casa", user_id: user2.id})
+
+lista_mercado.tasks << Task.create([
   {
-    name: "Melão"
+    name: "Melão", user_id: user1.id
   },
   {
-    name: "Ovos"
+    name: "Ovos", user_id: user1.id
   },
   {
-    name: "Carne"
+    name: "Carne", user_id: user1.id
   },
   {
     name: "Queijo",
-    done: true
+    done: true, user_id: user1.id
   }
   ])
+lista_mercado.save
 
-lista_casa.tasks.create([
+lista_casa.tasks << Task.create([
     {
-      name: "Arrumar armário"
+      name: "Arrumar armário", user_id: user2.id
     },
     {
-      name: "Limpar horta"
+      name: "Limpar horta", user_id: user2.id
     },
     {
       name: "Pagar luz",
-      done: true
+      done: true, user_id: user2.id
     }
     ])
+lista_casa.save
